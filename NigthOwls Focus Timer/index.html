@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NightOwls Focus Timer</title>
 </head>
-<body>
-    <header>
-        <h1>NightOwls Focus Timer</h1>
-        <p>Late night productivity time</p>
+<body class="bg-slate-950 text-slate-100 flex flex-col items-center justify-center min-h-screen p-6">
+    <header class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-indigo-400 tracking-wider">NightOwls Focus Timer</h1>
+        <p class="text-slate-400 text-sm mt-1 font-bold">Late night productivity time</p>
     </header>
-    <div>
+    <div class="bg-slate-900 border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/10 rounded-full w-64 h-64 flex items-center my-6">
         <h2>25:00</h2>
     </div>
-    <div>
-        <button>Start</button>
-        <button>Pause</button>
-        <button>Reset</button>
+    <div class="flex gap-4 mb-8">
+        <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition">Start</button>
+        <button class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold px-6 py-2.5 rounded-xl border border-slate-700 transition">Pause</button>
+        <button class="bg-slate-800 hover:bg-slate-700 text-rose-400 font-semibold px-6 py-2.5 rounded-xl border border-slate-700 transition">Reset</button>
     </div>
-    <div>
-        <label>Focus Time (min):</label>
-        <input type="number" value="25">
-        <label>Break Time (min):</label>
-        <input type="number" value="5">
+    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex gap-6 mb-6">
+        <div class="flex flex-col gap-1">
+            <label>Focus Time (min):</label>
+            <input type="number" value="25">
+        </div>
+        <div class="flex flex-col gap-1">
+            <label>Break Time (min):</label>
+            <input type="number" value="5">
+        </div>
     </div>
-    <div>
-        <label>Current Task:</label>
-        <input type="text" placeholder="What are you working on?">
+    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-1 w-full max-w-sm mb-6">
+        <label class="text-xs text-slate-400">Current Task:</label>
+        <input type="text" placeholder="What are you working on?" class="bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-indigo-500">
+    </div>
+    <div class="gap-2 mb-6">
+        <button class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">15 Min (Quick)</button>
+        <button class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">25 Min (Pomodoro)</button>
+        <button class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">45 Min (Deep Focus)</button>
+    </div>
+    <div class="bg-slate-900/50 border border-slate-800/80 p-4 rounded-2xl w-full max-w-sm text-center">
+        <h3 class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2">Tonight's Progress</h3>
+        <div class="flex justify-around text-sm">
+            <p class="text-slate-300">Completed Tasks: <span class="text-indigo-400 font-bold">0</span></p>
+            <p class="text-slate-300">Total Focus Time: <span class="text-indigo-400 font-bold">0 hrs</span></p>
+        </div>
     </div>
 </body>
 </html>
