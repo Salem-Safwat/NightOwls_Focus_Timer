@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulseGlow {
+          0%, 100% {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2), inset 0 0 15px rgba(99, 102, 241, 0.1);
+          }
+          50% {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.25);
+          }
+        }
+
+        .glow-circle {
+         animation: pulseGlow 4s infinite ease-in-out;
+      }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NightOwls Focus Timer</title>
@@ -11,8 +25,8 @@
         <h1 class="text-4xl font-extrabold text-indigo-400 tracking-wider">NightOwls Focus Timer</h1>
         <p class="text-slate-400 text-sm mt-1 font-bold">Late night productivity time</p>
     </header>
-    <div class="bg-slate-900 border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/10 rounded-full w-64 h-64 flex items-center my-6">
-        <h2>25:00</h2>
+    <div class="bg-slate-900 border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/10 rounded-full w-64 h-64 flex items-center justify-center my-6 transition-all duration-300 glow-circle">
+        <h2 class="text-6xl font-bold text-indigo-300 tracking-widest drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]">25:00</h2>
     </div>
     <div class="flex gap-4 mb-8">
         <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition">Start</button>
