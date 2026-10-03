@@ -1,8 +1,8 @@
-#NightOwls Focus Timer
+# NightOwls Focus Timer
 
 A dark-themed Focus Timer built HTML, Tailwind CSS, and JavaScript, which design specially for late-night study sessions.
 
-##Features:
+## Features:
 
 - **Customizable Timer**: Set focus and break durations to match your workflow.
 - **Quick Presets**: Fast one-click options for 15 mins, 25 mins, 45 mins focus sessions.
@@ -11,12 +11,12 @@ A dark-themed Focus Timer built HTML, Tailwind CSS, and JavaScript, which design
 - **Progress Tracking**: Real-time counter for finished tasks and completed focus hrs.
 - **Decimal Input**: Support fractional mins for quick quizzes.
 
-##Tech Stack:
+## Tech Stack:
 
 - **HTML5**
 - **Tailwind CSS** (via CDN)
 - **Vanilla JavaScript**
 
-##Getting Started:
+## Getting Started:
 
 No installation or build process required. Simply clone the repository and open `index.html` in your browser.
