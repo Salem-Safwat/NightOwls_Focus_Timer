@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NightOwls Focus Timer</title>
 </head>
-<body class="bg-black text-slate-100 flex flex-col items-center justify-center min-h-screen p-6">
+<body class="bg-[#1E1F22] text-slate-100 flex flex-col items-center justify-center min-h-screen p-6">
     <header class="text-center mb-8">
         <h1 class="text-4xl font-extrabold text-rose-800 tracking-wider">NightOwls Focus Timer</h1>
         <p class="text-slate-400 text-sm mt-1 font-bold">Late night productivity time</p>
@@ -36,16 +36,20 @@
     <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex gap-6 mb-6">
         <div class="flex flex-col gap-1">
             <label>Focus Time (min):</label>
-            <input type="number" value="25">
+            <input type="number" step="any" value="25" class="bg-slate-950 border border-slate-800 text-slate-200 px-2 py-1 rounded">
         </div>
         <div class="flex flex-col gap-1">
             <label>Break Time (min):</label>
-            <input type="number" value="5">
+            <input type="number" step="any" value="5" class="bg-slate-950 border border-slate-800 text-slate-200 px-2 py-1 rounded">
         </div>
     </div>
-    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-1 w-full max-w-sm mb-6">
+    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-2 w-full max-w-sm mb-6">
         <label class="text-xs text-slate-400">Current Task:</label>
-        <input type="text" placeholder="What are you working on?" class="bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-indigo-500">
+        <div class="flex gap-2">
+            <input type="text" id="taskInput" placeholder="What are you working on?" class="bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-indigo-500 w-full">
+            <button id="addTaskBtn" class="bg-rose-700 hover:bg-rose-600 text-white px-3 py-2 text-xs rounded-lg font-semibold transition">Add</button>
+        </div>
+        <ul id="taskList" class="flex flex-col gap-1 mt-2 text-xs text-slate-300"></ul>
     </div>
     <div class="gap-2 mb-6">
         <button class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">15 Min (Quick)</button>
@@ -60,97 +64,131 @@
         </div>
     </div>
     <script>
-        let timerDisplay = document.querySelector('h2');
-        let startBtn = document.querySelectorAll('button')[0];
-        let pauseBtn = document.querySelectorAll('button')[1];
-        let resetBtn = document.querySelectorAll('button')[2];
+        var clockTag = document.querySelector('h2');
+        var btnStart = document.querySelectorAll('button')[0];
+        var btnPause = document.querySelectorAll('button')[1];
+        var btnReset = document.querySelectorAll('button')[2];
 
-        let totalSeconds = 25 * 60;
-        let timerInterval = null;
+        var fInp = document.querySelectorAll('input')[0];
+        var bInp = document.querySelectorAll('input[type=number]')[1];
 
-        function updateDisplay() {
-            let minutes = Math.floor(totalSeconds / 60);
-            let seconds = totalSeconds % 60;
-            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        var focusHrsSpan = document.querySelectorAll('span.font-bold')[1];
+
+        var secsLeft = 25 * 60;
+        var tId = null;
+        var isBreakState = false;
+        var totalFocusMinsAcc = 0;
+
+        function draw() {
+            var m = Math.floor(secsLeft / 60);
+            var s = Math.round(secsLeft % 60);
+            if (s === 60) {
+                m += 1;
+                s = 0;
+            }
+            var mStr = m < 10 ? '0' + m : m;
+            var sStr = s < 10 ? '0' + s : s;
+            clockTag.textContent = mStr + ':' + sStr;
         }
 
-        let breakInput = document.querySelectorAll('input[type=number]')[1];
-        let isBreak = false;
-
-        startBtn.addEventListener('click', () => { 
-            if (timerInterval !== null) return;
-            timerInterval = setInterval(() => {
-                if (totalSeconds > 0) {
-                    totalSeconds--;
-                    updateDisplay();
+        btnStart.onclick = function() {
+            if (tId !== null) return;
+            tId = setInterval(function() {
+                if (secsLeft > 0) {
+                    secsLeft--;
+                    draw();
                 } else {
-                    let ctx = new(window.AudioContext || window.webkitAudioContext)();
-                    let osc = ctx.createOscillator();
-                    osc.connect(ctx.destination);
+                    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    var osc = audioCtx.createOscillator();
+                    osc.connect(audioCtx.destination);
                     osc.start();
-                    osc.stop(ctx.currentTime + 0.5);
+                    osc.stop(audioCtx.currentTime + 0.5);
 
-                    if(!isBreak) {
-                        alert('Focus session completed! Time for a break.');
-                        isBreak = true;
-                        totalSeconds = (breakInput.value || 5) * 60;
-                        updateDisplay();
+                    if (!isBreakState) {
+                        var finishedMins = parseFloat(fInp.value) || 25;
+                        totalFocusMinsAcc += finishedMins;
+                        var hrs = (totalFocusMinsAcc / 60).toFixed(2);
+                        if (focusHrsSpan) focusHrsSpan.textContent = hrs + ' hrs';
+
+                        alert('Done focus! Take a break');
+                        isBreakState = true;
+                        secsLeft = (parseFloat(bInp.value) || 5) * 60;
+                        draw();
                     } else {
-                        alert('Break session completed! Back to focus.');
-                        isBreak = false;
-                        totalSeconds = (focusInput.value || 25) * 60;
-                        updateDisplay();
+                        alert('Break finished! Back to focus');
+                        isBreakState = false;
+                        secsLeft = (parseFloat(fInp.value) || 25) * 60;
+                        draw();
                     }
-                    clearInterval(timerInterval);
-                    timerInterval = null;
+                    clearInterval(tId);
+                    tId = null;
                 }
             }, 1000);
-        });
+        };
 
-        pauseBtn.addEventListener('click', () => {
-            clearInterval(timerInterval);
-            timerInterval = null;
-        });
+        btnPause.onclick = function() {
+            clearInterval(tId);
+            tId = null;
+        };
 
-        resetBtn.addEventListener('click', () => {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            totalSeconds = 25 * 60;
-            updateDisplay();
-        });
-        let focusInput = document.querySelectorAll('input')[0];
+        btnReset.onclick = function() {
+            clearInterval(tId);
+            tId = null;
+            isBreakState = false;
+            secsLeft = (parseFloat(fInp.value) || 25) * 60;
+            draw();
+        };
 
-        focusInput.addEventListener('change', () => {
-            totalSeconds = focusInput.value * 60;
-            updateDisplay();
-        });
-        breakInput.addEventListener('change', () => {
-            if (isBreak) {
-                totalSeconds = breakInput.value *60;
-                updateDisplay();
+        fInp.onchange = function() {
+            if (!isBreakState) {
+                secsLeft = (parseFloat(fInp.value) || 1) * 60;
+                draw();
             }
-        });
-        let preset15 = document.querySelectorAll('button')[3];
-        let preset25 = document.querySelectorAll('button')[4];
-        let preset45 = document.querySelectorAll('button')[5];
+        };
 
-        preset15.addEventListener('click', () => {
-            focusInput.value = 15;
-            totalSeconds = 15 * 60;
-            updateDisplay();
-        });
+        bInp.onchange = function() {
+            if (isBreakState) {
+                secsLeft = (parseFloat(bInp.value) || 1) * 60;
+                draw();
+            }
+        };
 
-        preset25.addEventListener('click', () => {
-            focusInput.value = 25;
-            totalSeconds = 25 * 60;
-            updateDisplay();
-        });
+        var p15 = document.querySelectorAll('button')[4];
+        var p25 = document.querySelectorAll('button')[5];
+        var p45 = document.querySelectorAll('button')[6];
 
-        preset45.addEventListener('click', () => {
-            focusInput.value = 45;
-            totalSeconds = 45 * 60;
-            updateDisplay();
-        });
+        if(p15) p15.onclick = function() { fInp.value = 15; isBreakState = false; secsLeft = 15 * 60; draw(); };
+        if(p25) p25.onclick = function() { fInp.value = 25; isBreakState = false; secsLeft = 25 * 60; draw(); };
+        if(p45) p45.onclick = function() { fInp.value = 45; isBreakState = false; secsLeft = 45 * 60; draw(); };
+
+        var myTaskInp = document.getElementById('taskInput');
+        var myAddBtn = document.getElementById('addTaskBtn');
+        var myUlList = document.getElementById('taskList');
+        var doneSpan = document.querySelectorAll('span.font-bold')[0];
+
+        var totalDone = 0;
+
+        if (myAddBtn) {
+            myAddBtn.onclick = function() {
+                var txt = myTaskInp.value.trim();
+                if (!txt) return;
+
+                var item = document.createElement('li');
+                item.className = 'flex justify-between items-center bg-slate-950 border border-slate-800/60 p-2 rounded';
+                item.innerHTML = '<span>' + txt + '</span><button class="bg-emerald-400 hover:bg-emerald-300 text-xs text-slate-950 font-bold px-1.5 py-0.5 rounded">✔</button>';
+
+                var cBtn = item.querySelector('button');
+                cBtn.onclick = function() {
+                    item.classList.add('line-through', 'text-slate-500');
+                    cBtn.remove();
+                    totalDone++;
+                    if (doneSpan) doneSpan.textContent = totalDone;
+                };
+
+                myUlList.appendChild(item);
+                myTaskInp.value = '';
+            };
+        }
     </script>
 </body>
 </html>
