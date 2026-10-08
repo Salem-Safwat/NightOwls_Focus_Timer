@@ -5,62 +5,62 @@
     <style>
         @keyframes pulseGlow {
           0%, 100% {
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2), inset 0 0 15px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 15px rgba(185, 28, 28, 0.2), inset 0 0 15px rgba(185, 28, 28, 0.1);
           }
           50% {
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 30px rgba(185, 28, 28, 0.5), inset 0 0 20px rgba(185, 28, 28, 0.25);
           }
         }
 
         .glow-circle {
-         animation: pulseGlow 4s infinite ease-in-out;
+          animation: pulseGlow 4s infinite ease-in-out;
       }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NightOwls Focus Timer</title>
 </head>
-<body class="bg-[#1E1F22] text-slate-100 flex flex-col items-center justify-center min-h-screen p-6">
+<body class="bg-[#0b0c10] text-slate-100 flex flex-col items-center justify-center min-h-screen p-6">
     <header class="text-center mb-8">
-        <h1 class="text-4xl font-extrabold text-rose-800 tracking-wider">NightOwls Focus Timer</h1>
-        <p class="text-slate-400 text-sm mt-1 font-bold">Late night productivity time</p>
+        <h1 class="text-4xl font-extrabold text-red-700 tracking-wider">NightOwls Focus Timer</h1>
+        <p class="text-slate-400 text-sm mt-1 font-bold">Late night productivity tracker</p>
     </header>
-    <div class="bg-slate-900 border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/10 rounded-full w-64 h-64 flex items-center justify-center my-6 transition-all duration-300 glow-circle">
-        <h2 class="text-6xl font-bold text-indigo-300 tracking-widest drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]">25:00</h2>
+    <div class="bg-[#121318] border-2 border-red-900/40 shadow-lg rounded-full w-64 h-64 flex items-center justify-center my-6 transition-all duration-300 glow-circle">
+        <h2 class="text-6xl font-bold text-red-600 tracking-widest">25:00</h2>
     </div>
     <div class="flex gap-4 mb-8">
-        <button id="startBtn" class="bg-rose-700 hover:bg-rose-600 text-white font-semibold px-6 py-2.5 rounded-xl transition">Start</button>
-        <button id="pauseBtn" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold px-6 py-2.5 rounded-xl border border-slate-700 transition">Pause</button>
-        <button id="resetBtn" class="bg-slate-800 hover:bg-slate-700 text-rose-400 font-semibold px-6 py-2.5 rounded-xl border border-slate-700 transition">Reset</button>
+        <button id="startBtn" class="bg-red-800 hover:bg-red-700 text-white font-semibold px-6 py-2.5 rounded-xl border border-red-700 transition">Start</button>
+        <button id="pauseBtn" class="bg-slate-900 hover:bg-slate-800 text-amber-500 font-semibold px-6 py-2.5 rounded-xl border border-slate-800 transition">Pause</button>
+        <button id="resetBtn" class="bg-slate-900 hover:bg-slate-800 text-red-400 font-semibold px-6 py-2.5 rounded-xl border border-slate-800 transition">Reset</button>
     </div>
-    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex gap-6 mb-6">
+    <div class="bg-[#121318] border border-slate-800 p-4 rounded-2xl flex gap-6 mb-6">
         <div class="flex flex-col gap-1">
-            <label>Focus Time (min):</label>
-            <input id="focusInput" type="number" step="any" value="25" class="bg-slate-950 border border-slate-800 text-slate-200 px-2 py-1 rounded">
+            <label class="text-sm font-semibold text-slate-300">Focus Time (min):</label>
+            <input id="focusInput" type="number" step="any" value="25" class="bg-[#0b0c10] border border-slate-800 text-slate-200 px-2 py-1 rounded">
         </div>
         <div class="flex flex-col gap-1">
-            <label>Break Time (min):</label>
-            <input id="breakInput" type="number" step="any" value="5" class="bg-slate-950 border border-slate-800 text-slate-200 px-2 py-1 rounded">
+            <label class="text-sm font-semibold text-slate-300">Break Time (min):</label>
+            <input id="breakInput" type="number" step="any" value="5" class="bg-[#0b0c10] border border-slate-800 text-slate-200 px-2 py-1 rounded">
         </div>
     </div>
-    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-2 w-full max-w-sm mb-6">
-        <label class="text-xs text-slate-400">Current Task:</label>
+    <div class="bg-[#121318] border border-slate-800 p-4 rounded-2xl flex flex-col gap-2 w-full max-w-sm mb-6">
+        <label class="text-sm font-semibold text-slate-300">Current Task:</label>
         <div class="flex gap-2">
-            <input type="text" id="taskInput" placeholder="What are you working on?" class="bg-slate-950 border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-indigo-500 w-full">
-            <button id="addTaskBtn" class="bg-rose-700 hover:bg-rose-600 text-white px-3 py-2 text-xs rounded-lg font-semibold transition">Add</button>
+            <input type="text" id="taskInput" placeholder="What are you working on?" class="bg-[#0b0c10] border border-slate-800 text-slate-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-red-700 w-full">
+            <button id="addTaskBtn" class="bg-red-800 hover:bg-red-700 text-white px-3 py-2 text-xs rounded-lg font-semibold transition">Add</button>
         </div>
         <ul id="taskList" class="flex flex-col gap-1 mt-2 text-xs text-slate-300"></ul>
     </div>
     <div class="flex gap-2 mb-6">
-        <button id="preset15" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">15 Min (Quick)</button>
-        <button id="preset25" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">25 Min (Pomodoro)</button>
-        <button id="preset45" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">45 Min (Deep Focus)</button>
+        <button id="preset15" class="bg-[#121318] hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">15 Min (Quick)</button>
+        <button id="preset25" class="bg-[#121318] hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">25 Min (Pomodoro)</button>
+        <button id="preset45" class="bg-[#121318] hover:bg-slate-800 border border-slate-800 text-slate-400 text-xs px-3 py-1.5 rounded-lg transition">45 Min (Deep Focus)</button>
     </div>
-    <div class="bg-slate-900/50 border border-slate-800/80 p-4 rounded-2xl w-full max-w-sm text-center">
+    <div class="bg-[#121318]/70 border border-slate-800 p-4 rounded-2xl w-full max-w-sm text-center">
         <h3 class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2">Tonight's Progress</h3>
         <div class="flex justify-around text-sm">
-            <p class="text-slate-300">Completed Tasks: <span id="doneCount" class="text-indigo-400 font-bold">0</span></p>
-            <p class="text-slate-300">Total Focus Time: <span id="focusHours" class="text-indigo-400 font-bold">0 hrs</span></p>
+            <p class="text-slate-300">Completed Tasks: <span id="doneCount" class="text-red-500 font-bold">0</span></p>
+            <p class="text-slate-300">Total Focus Time: <span id="focusHours" class="text-red-500 font-bold">0 hrs</span></p>
         </div>
     </div>
     <script>
@@ -168,12 +168,12 @@
                 if (!text) return;
 
                 const li = document.createElement('li');
-                li.className = 'flex justify-between items-center bg-slate-950 border border-slate-800/60 p-2 rounded';
-                li.innerHTML = '<span>' + text + '</span><button class="bg-emerald-400 hover:bg-emerald-300 text-xs text-slate-950 font-bold px-1.5 py-0.5 rounded">✔</button>';
+                li.className = 'flex justify-between items-center bg-[#0b0c10] border border-slate-800 p-2 rounded';
+                li.innerHTML = '<span>' + text + '</span><button class="bg-red-800 hover:bg-red-700 text-xs text-white px-1.5 py-0.5 rounded">✔</button>';
 
                 const checkBtn = li.querySelector('button');
                 checkBtn.onclick = function() {
-                    li.classList.add('line-through', 'text-slate-500');
+                    li.classList.add('line-through', 'text-slate-600');
                     checkBtn.remove();
                     tasksDoneCount++;
                     doneCountSpan.textContent = tasksDoneCount;

@@ -1,3 +1,5 @@
+![Web Preview](Web%20Prev.png)
+
 # NightOwls Focus Timer
 
 A dark-themed focus timer for late-night study sessions. Built with HTML, Tailwind CSS, and JavaScript.
@@ -13,4 +15,8 @@ A dark-themed focus timer for late-night study sessions. Built with HTML, Tailwi
 
 ## How to run:
 
-Just open the file "index.html" in any browser, or click the demo link.
+Just open the file "index.html" in any browser, or simply click the demo link.
+
+## Inspiration:
+
+I made this project because I often struggled with poor time management and lost track of plans.
